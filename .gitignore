@@ -7,6 +7,39 @@ wheels/
 *.egg-info
 
 # Virtual environments
-.venv
-sample/*
+.venv/
+venv/
+env/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker volumes data (local development)
+data/
+
+# Test files and samples
+sample/
+*.pdf
+!docs/*.pdf
+
+# Environment files
+.env
+.env.local
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
 CLAUDE.md
