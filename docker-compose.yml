@@ -9,8 +9,8 @@ services:
     environment:
       - REDIS_URL=redis://redis:6379/0
       - STORAGE_DIR=/data
-      - PUBLIC_BASE_URL=http://localhost
-      - MAX_UPLOAD_MB=2048
+      - PUBLIC_BASE_URL=${PUBLIC_BASE_URL:-http://localhost:8003}
+      - MAX_UPLOAD_MB=${MAX_UPLOAD_MB:-2048}
     volumes:
       - pdfdata:/data
     depends_on:

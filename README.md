@@ -142,7 +142,7 @@ Real-world test results:
 ```bash
 REDIS_URL=redis://redis:6379/0      # Redis connection string
 STORAGE_DIR=/data                    # Storage directory path
-PUBLIC_BASE_URL=http://localhost     # Public base URL for responses
+PUBLIC_BASE_URL=http://localhost:8003 # Public base URL for responses
 MAX_UPLOAD_MB=2048                   # Max upload size in MB
 ```
 
@@ -153,7 +153,44 @@ STORAGE_DIR=/data                    # Storage directory path
 WORKER_CONCURRENCY=2                 # Number of worker processes
 ```
 
-Modify `docker-compose.yml` to change these values.
+### Development Configuration
+
+For local development, the default settings in `docker-compose.yml` work out of the box.
+
+### Production Configuration
+
+**IMPORTANT**: For production deployment, you MUST set the correct `PUBLIC_BASE_URL`.
+
+1. Copy the example environment file:
+```bash
+cp .env.example .env
+```
+
+2. Edit `.env` and update `PUBLIC_BASE_URL`:
+```bash
+# For a production domain:
+PUBLIC_BASE_URL=https://your-domain.com
+
+# For a production server with IP and port:
+PUBLIC_BASE_URL=http://123.45.67.89:8003
+```
+
+3. Deploy with Docker Compose (it will automatically read `.env`):
+```bash
+docker compose up --build -d
+```
+
+**Why this matters**: The `PUBLIC_BASE_URL` is returned in API responses for `status_url` and `download_url`. If left as `localhost`, clients won't be able to access these URLs from remote machines.
+
+**Example API response with correct URL:**
+```json
+{
+  "job_id": "fe7956a305f24f5ab5f38c19379352cc",
+  "status": "queued",
+  "status_url": "https://your-domain.com/api/jobs/fe7956a305f24f5ab5f38c19379352cc",
+  "download_url": "https://your-domain.com/api/jobs/fe7956a305f24f5ab5f38c19379352cc/download"
+}
+```
 
 ### Ghostscript Parameters
 
